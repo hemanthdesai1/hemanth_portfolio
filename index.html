@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hemanth Desai | Mission Control & Support Operations</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>Hemanth Desai | Support Operations & AI Engineer</title>
   
-  <!-- Spline Viewer Runtime Component -->
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Spline 3D Web Component -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
 
   <style>
     :root {
-      --bg: #07090e;
-      --card-bg: rgba(15, 23, 42, 0.7);
-      --card-border: rgba(56, 189, 248, 0.15);
-      --accent: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.35);
-      --purple: #a855f7;
-      --danger: #ef4444;
-      --success: #10b981;
-      --text-main: #f8fafc;
+      --bg: #090a0f;
+      --card-bg: rgba(18, 20, 29, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --purple-glow: #a855f7;
+      --cyan-glow: #38bdf8;
+      --accent: #c084fc;
+      --text-white: #ffffff;
       --text-muted: #94a3b8;
+      --sidebar-width: 70px;
     }
 
     * {
@@ -31,852 +32,966 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg);
-      color: var(--text-main);
+      color: var(--text-white);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.6;
     }
 
-    /* Ambient background grid & glow */
-    .grid-layer {
+    /* Ambient Spotlight Background */
+    .spotlight {
       position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    .ambient-glow {
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      filter: blur(140px);
+      top: -20%;
+      left: 30%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
+      filter: blur(80px);
       z-index: -1;
-      opacity: 0.28;
       pointer-events: none;
     }
-    .glow-cyan { top: -150px; left: -100px; background: var(--accent); }
-    .glow-purple { bottom: -150px; right: -100px; background: var(--purple); }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    /* Top Status Bar */
-    header {
+    /* Left Floating Social & Utility Rail */
+    .side-rail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      border-right: 1px solid var(--card-border);
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 1rem;
+      padding: 2rem 0;
+      z-index: 100;
+      background: rgba(9, 10, 15, 0.6);
+      backdrop-filter: blur(10px);
     }
 
-    .brand-logo {
+    .rail-logo {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 1.2rem;
-      font-family: 'Fira Code', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
       color: var(--accent);
-      letter-spacing: -0.5px;
     }
 
-    .header-actions {
+    .rail-socials {
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      color: var(--success);
-      font-family: 'Fira Code', monospace;
-    }
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-      animation: pulse 1.8s infinite;
-    }
-
-    .sound-toggle-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+    .rail-link {
       color: var(--text-muted);
-      padding: 0.4rem 0.8rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-family: 'Fira Code', monospace;
-      cursor: pointer;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.2s ease, transform 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s ease;
+      justify-content: center;
     }
-    .sound-toggle-btn.active {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(56, 189, 248, 0.1);
+    .rail-link:hover {
+      color: var(--text-white);
+      transform: scale(1.2);
     }
 
-    /* Interactive Alert Banner */
-    .incident-ticker {
-      background: linear-gradient(90deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      padding: 0.75rem 1.25rem;
-      border-radius: 12px;
-      margin-bottom: 2.5rem;
+    .rail-indicator {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+    }
+
+    /* Main Viewport Container */
+    .viewport-content {
+      margin-left: var(--sidebar-width);
+      padding: 0 3rem;
+      max-width: 1350px;
+    }
+
+    @media (max-width: 768px) {
+      .side-rail { display: none; }
+      .viewport-content { margin-left: 0; padding: 0 1.25rem; }
+    }
+
+    /* Top Navbar */
+    nav {
+      height: 90px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      animation: alertPulse 3s infinite ease-in-out;
     }
 
-    .incident-ticker-left {
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
       font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-white);
     }
 
-    .badge-p1 {
-      background: var(--danger);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-family: 'Fira Code', monospace;
-    }
-
-    .btn-resolve {
-      background: var(--danger);
-      color: #fff;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.45rem 0.9rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-      transition: transform 0.2s ease, filter 0.2s ease;
-    }
-    .btn-resolve:hover {
-      transform: scale(1.03);
-      filter: brightness(1.15);
-    }
-
-    /* Hero Section with Spline 3D Character */
+    /* HERO SECTION */
     .hero-section {
+      min-height: calc(100vh - 90px);
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: 1.15fr 1fr;
       align-items: center;
-      margin-bottom: 3.5rem;
+      gap: 2rem;
+      position: relative;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 992px) {
       .hero-section {
         grid-template-columns: 1fr;
-        text-align: center;
+        padding-bottom: 4rem;
       }
     }
 
-    .hero-title {
-      font-size: 2.8rem;
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, var(--accent), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-desc {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      max-width: 520px;
-    }
-
-    /* 3D Spline Canvas Container */
-    .spline-card {
-      position: relative;
-      height: 480px;
+    .avatar-canvas-box {
       width: 100%;
-      border-radius: 20px;
+      height: 520px;
+      position: relative;
+      border-radius: 24px;
+      background: radial-gradient(circle at center, rgba(30, 27, 46, 0.45) 0%, rgba(9, 10, 15, 0.8) 70%);
       border: 1px solid var(--card-border);
-      background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4), rgba(7, 9, 14, 0.9));
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 50px var(--accent-glow);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
     }
 
     spline-viewer {
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
     }
 
-    /* Avatar Speech Bubble Overlay */
-    .spline-speech-box {
-      position: relative;
-      z-index: 2;
-      background: rgba(15, 23, 42, 0.88);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      margin: 1rem;
-      padding: 1rem;
-      border-radius: 14px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    .hero-text-block {
+      padding-left: 1.5rem;
     }
 
-    .speech-text {
-      font-size: 0.95rem;
-      color: #fff;
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 2.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
       margin-bottom: 0.75rem;
-      min-height: 44px;
     }
 
-    .speech-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .action-chip {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-family: 'Fira Code', monospace;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .action-chip:hover {
-      background: var(--accent);
-      color: #04101e;
-      border-color: var(--accent);
-    }
-
-    /* Live Ops Metrics */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 3.5rem;
-    }
-
-    .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      backdrop-filter: blur(8px);
-      text-align: center;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .metric-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-    }
-
-    .metric-val {
-      font-size: 2.2rem;
+    .hero-title-solid {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
       font-weight: 800;
-      color: var(--accent);
-      font-family: 'Fira Code', monospace;
-    }
-
-    .metric-lbl {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 0.25rem;
-    }
-
-    /* Interactive Command Terminal */
-    .terminal-container {
-      background: #04060a;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      border-radius: 14px;
-      padding: 1.25rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.88rem;
-      margin-bottom: 3.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    .terminal-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .terminal-dots {
-      display: flex;
-      gap: 6px;
-    }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #f59e0b; }
-    .dot-green { background: #10b981; }
-
-    .terminal-title {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .terminal-body {
-      color: var(--text-muted);
-      min-height: 140px;
-      max-height: 250px;
-      overflow-y: auto;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-      white-space: pre-wrap;
-    }
-
-    .terminal-prompt-row {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .terminal-prompt-symbol {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .terminal-input {
-      background: transparent;
-      border: none;
-      outline: none;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      text-transform: uppercase;
       color: #fff;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.9rem;
-      flex-grow: 1;
     }
 
-    /* Experience Nodes */
-    .section-heading {
-      font-size: 1.6rem;
-      font-weight: 700;
+    .hero-title-hollow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
       margin-bottom: 1.5rem;
-      display: flex;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .cta-btn {
+      display: inline-flex;
       align-items: center;
       gap: 0.6rem;
+      background: #fff;
+      color: #090a0f;
+      font-weight: 700;
+      padding: 0.85rem 1.8rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+    }
+    .cta-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
     }
 
-    .experience-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 4rem;
+    /* SECTION BASICS */
+    section {
+      padding: 6rem 0;
     }
 
-    .experience-card {
+    .section-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .section-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 3rem;
+    }
+
+    /* ABOUT & WHAT I DO */
+    .what-i-do-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .service-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: all 0.2s ease;
+      border-radius: 20px;
+      padding: 2.2rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .experience-card:hover {
-      border-color: rgba(56, 189, 248, 0.4);
-      background: rgba(22, 30, 49, 0.85);
+    .service-card:hover {
+      border-color: rgba(168, 85, 247, 0.4);
+      transform: translateY(-5px);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover::before {
+      opacity: 1;
     }
 
-    .exp-header {
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+      display: inline-block;
+    }
+
+    .service-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-body {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* EXPERIENCE SECTION (Replicating 00:00:05) */
+    .experience-container {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 2.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+    }
+
+    @media (max-width: 860px) {
+      .experience-container { grid-template-columns: 1fr; }
+    }
+
+    .exp-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .exp-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      color: var(--text-muted);
+      text-align: left;
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .exp-title {
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: #fff;
-    }
-
-    .exp-company {
-      color: var(--accent);
+      align-items: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
       font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .exp-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .exp-tab.active {
+      color: #fff;
+      background: rgba(168, 85, 247, 0.12);
+      border-color: rgba(168, 85, 247, 0.35);
+    }
+    .exp-tab .tab-year {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
     }
 
-    .exp-period {
-      font-size: 0.82rem;
+    .exp-details-panel {
+      padding: 0.5rem 1rem;
+    }
+
+    .exp-role-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .exp-company-sub {
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .exp-points-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
       color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .exp-points-list li {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .exp-points-list li::before {
+      content: '▹';
+      color: var(--accent);
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* PROJECTS CARDS (Replicating 00:00:07) */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(168, 85, 247, 0.4);
+    }
+
+    .project-card-header {
+      padding: 1.75rem 1.75rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-index {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .project-badge {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      color: var(--accent);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
       font-family: 'Fira Code', monospace;
     }
 
-    .exp-points {
-      padding-left: 1.2rem;
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
-    .exp-points li { margin-bottom: 0.35rem; }
-
-    /* Interactive Modal: P1 War Room Simulator */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-    .modal-overlay.active { display: flex; }
-
-    .modal-content {
-      background: #0b0f19;
-      border: 1px solid var(--accent);
-      box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 580px;
-      padding: 2rem;
+    .project-content {
+      padding: 1rem 1.75rem 2rem;
     }
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-title {
+    .project-name {
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--danger);
+      margin-bottom: 0.6rem;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tags {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 0.5rem;
     }
 
-    .modal-close {
-      background: none;
-      border: none;
+    .tag-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    .modal-step-text {
-      font-size: 0.98rem;
-      margin-bottom: 1.25rem;
-      color: #fff;
-    }
-
-    .choice-btn {
-      width: 100%;
       background: rgba(255, 255, 255, 0.05);
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    /* PHYSICS TECH STACK CANVAS (Replicating 00:00:09) */
+    .physics-canvas-box {
+      width: 100%;
+      height: 480px;
+      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.08) 0%, rgba(9, 10, 15, 0.95) 80%);
       border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 0.85rem 1rem;
-      border-radius: 10px;
-      margin-bottom: 0.75rem;
-      text-align: left;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .choice-btn:hover {
-      background: rgba(56, 189, 248, 0.15);
-      border-color: var(--accent);
-      color: #fff;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 1.5rem;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.9); }
+    #techCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #techCanvas:active {
+      cursor: grabbing;
     }
 
-    @keyframes alertPulse {
-      0%, 100% { border-color: rgba(239, 68, 68, 0.4); }
-      50% { border-color: rgba(239, 68, 68, 0.9); }
+    .canvas-hint {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      pointer-events: none;
+      letter-spacing: 1px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-  <div class="grid-layer"></div>
-  <div class="ambient-glow glow-cyan"></div>
-  <div class="ambient-glow glow-purple"></div>
+  <!-- Ambient Light -->
+  <div class="spotlight"></div>
 
-  <div class="container">
-    <header>
-      <div class="brand-logo">hemanth.ops // terminal</div>
-      <div class="header-actions">
-        <button class="sound-toggle-btn" id="voiceToggleBtn" onclick="toggleVoice()">
-          <span id="soundStatusIcon">🔊</span> AI Voice: <span id="voiceStatusText">ON</span>
-        </button>
-        <div class="status-badge">
-          <span class="pulse-dot"></span> 99.9% SLO Met
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <!-- Real-Time Interactive Incident Ticker -->
-      <section class="incident-ticker">
-        <div class="incident-ticker-left">
-          <span class="badge-p1">P1 ALERT</span>
-          <span>Inbound Workday API latency spike (>3200ms) detected.</span>
-        </div>
-        <button class="btn-resolve" onclick="openWarRoom()">Launch Triage War Room 🚨</button>
-      </section>
-
-      <!-- Hero Section with Spline 3D Character -->
-      <section class="hero-section">
-        <div>
-          <h1 class="hero-title">
-            Hi, I'm <span class="gradient-text">Hemanth Desai</span>.
-          </h1>
-          <p class="hero-desc">
-            Product & SaaS Support Operations Specialist owning 99.9% uptime, orchestrating production rollouts, and bridging complex enterprise integrations.
-          </p>
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-            <button class="choice-btn" style="width: auto; padding: 0.6rem 1.2rem; background: var(--accent); color: #04101e; font-weight: 700; border: none;" onclick="sayGreeting()">Say Hi to 3D Avatar 👋</button>
-            <a href="mailto:hemanthdesai1@gmail.com" class="choice-btn" style="width: auto; padding: 0.6rem 1.2rem; text-decoration: none; display: inline-block;">Email Me</a>
-          </div>
-        </div>
-
-        <!-- Spline 3D Character Container -->
-        <div class="spline-card">
-          <!-- Interactive Spline 3D Scene -->
-          <spline-viewer url="https://prod.spline.design/6W-t8MYQ7ZE-iL3O/scene.splinecode"></spline-viewer>
-          
-          <div class="spline-speech-box">
-            <div class="speech-text" id="avatarSpeech">
-              "Hey there! Drag me around in 3D or click the chips below to see what I do."
-            </div>
-            <div class="speech-actions">
-              <span class="action-chip" onclick="askAvatar('intro')">👋 Who is Hemanth?</span>
-              <span class="action-chip" onclick="askAvatar('sana')">💼 Sana / Workday</span>
-              <span class="action-chip" onclick="askAvatar('releases')">🚀 10+ Releases</span>
-              <span class="action-chip" onclick="askAvatar('ai')">🤖 AI & LLM Ops</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Key Metrics -->
-      <section class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-val">99.9%</div>
-          <div class="metric-lbl">SLI/SLO Target Uptime Maintained</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">200+</div>
-          <div class="metric-lbl">Daily Tickets Triaged & Resolved</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">10+</div>
-          <div class="metric-lbl">Monthly Release Deployments Led</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-val">4+ Yrs</div>
-          <div class="metric-lbl">SaaS & Enterprise Operations</div>
-        </div>
-      </section>
-
-      <!-- Interactive Command Terminal -->
-      <div class="section-heading">⚡ Command Terminal (Try Typing or Clicking)</div>
-      <section class="terminal-container">
-        <div class="terminal-top">
-          <div class="terminal-dots">
-            <div class="dot dot-red"></div>
-            <div class="dot dot-yellow"></div>
-            <div class="dot dot-green"></div>
-          </div>
-          <div class="terminal-title">bash — 80x24</div>
-          <div style="font-size: 0.75rem; color: var(--accent);">Type 'help' for commands</div>
-        </div>
-        <div class="terminal-body" id="terminalLog">Welcome to Hemanth's Operations Console.
-Current Status: Active Customer Care Analyst @ Sana Labs / Workday.
-Type 'help', 'skills', 'experience', or 'clear' below to interact.
-</div>
-        <div class="terminal-prompt-row">
-          <span class="terminal-prompt-symbol">hemanth@ops:~$</span>
-          <input type="text" class="terminal-input" id="termInput" placeholder="type a command (e.g. skills)..." autofocus />
-        </div>
-      </section>
-
-      <!-- Experience Section -->
-      <div class="section-heading">💼 Experience Playbook</div>
-      <section class="experience-list">
-        
-        <div class="experience-card">
-          <div class="exp-header">
-            <div>
-              <span class="exp-title">Customer Care Analyst</span> — 
-              <span class="exp-company">Sana Labs / Workday</span>
-            </div>
-            <span class="exp-period">Current</span>
-          </div>
-          <ul class="exp-points">
-            <li>Spearheading customer operational workflows across AI learning platforms and enterprise Workday ecosystems.</li>
-            <li>Translating high-severity platform anomalies into engineering tickets with reproducible telemetry data.</li>
-          </ul>
-        </div>
-
-        <div class="experience-card">
-          <div class="exp-header">
-            <div>
-              <span class="exp-title">Product Support Engineer</span> — 
-              <span class="exp-company">BetterPlace</span>
-            </div>
-            <span class="exp-period">Aug 2024 – Present</span>
-          </div>
-          <ul class="exp-points">
-            <li>Supported enterprise HR tech platform covering Attendance, Payroll, and Upskilling modules.</li>
-            <li>Triaged 200+ daily support requests across Jira and Zendesk, maintaining clean ticket hygiene[cite: 1].</li>
-            <li>Drove root-cause analysis (RCA) loops with engineering teams to convert recurring errors into permanent code fixes[cite: 1].</li>
-          </ul>
-        </div>
-
-        <div class="experience-card">
-          <div class="exp-header">
-            <div>
-              <span class="exp-title">Product Support Engineer</span> — 
-              <span class="exp-company">Nextuple</span>
-            </div>
-            <span class="exp-period">Oct 2022 – Jul 2024</span>
-          </div>
-          <ul class="exp-points">
-            <li>Led 10+ monthly production release calls with rollback ownership and post-deployment validation[cite: 1].</li>
-            <li>Designed and maintained Grafana SLI/SLO dashboards for real-time visibility into microservice health[cite: 1].</li>
-            <li>Served as incident coordinator across cross-functional engineering pods during P1/P2 outages[cite: 1].</li>
-          </ul>
-        </div>
-
-        <div class="experience-card">
-          <div class="exp-header">
-            <div>
-              <span class="exp-title">Customer Support Engineer</span> — 
-              <span class="exp-company">TechGyan</span>
-            </div>
-            <span class="exp-period">Jan 2022 – Sep 2022</span>
-          </div>
-          <ul class="exp-points">
-            <li>Provided Tier-2 support for enterprise Microsoft 365 services and recorded workflows in Dynamics 365 CRM[cite: 2].</li>
-            <li>Authored runbooks and led internal knowledge transfers to accelerate average resolution time[cite: 2].</li>
-          </ul>
-        </div>
-
-      </section>
-    </main>
-  </div>
-
-  <!-- P1 Incident War Room Modal -->
-  <div class="modal-overlay" id="warRoomModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">🚨 P1 Incident Response Simulation</div>
-        <button class="modal-close" onclick="closeWarRoom()">&times;</button>
-      </div>
-      <div id="modalStepContent">
-        <p class="modal-step-text">
-          <strong>Alert:</strong> Workday Ingestion Webhook error rate reached 34%. Client HR sync is failing.<br>
-          What is your immediate first step?
-        </p>
-        <button class="choice-btn" onclick="nextWarRoomStep(1, true)">📊 Check Grafana SLI/SLO dashboard & query server error logs</button>
-        <button class="choice-btn" onclick="nextWarRoomStep(1, false)">🔄 Immediately reboot all production database clusters</button>
-      </div>
+  <!-- Left Action & Social Rail -->
+  <aside class="side-rail">
+    <div class="rail-logo">HD</div>
+    
+    <div class="rail-socials">
+      <a href="https://linkedin.com/in/hemanth-desai-879208134" target="_blank" class="rail-link" title="LinkedIn">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      </a>
+      <a href="mailto:hemanthdesai1@gmail.com" class="rail-link" title="Email">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+      </a>
+      <a href="#contact" class="rail-link" title="Terminal">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+      </a>
     </div>
+
+    <div class="rail-indicator">
+      HEMANTH // PORTFOLIO
+    </div>
+  </aside>
+
+  <!-- Main Content Body -->
+  <div class="viewport-content">
+    
+    <!-- Navigation -->
+    <nav>
+      <div class="brand-title">PORTFOLIO</div>
+      <ul class="nav-links">
+        <li><a href="#about" class="active">About</a></li>
+        <li><a href="#services">What I Do</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#techstack">Techstack</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Section (00:00:01) -->
+    <section class="hero-section" id="hero">
+      <div class="avatar-canvas-box">
+        <!-- Live Spline 3D Scene -->
+        <spline-viewer url="https://prod.spline.design/6W-t8MYQ7ZE-iL3O/scene.splinecode"></spline-viewer>
+      </div>
+
+      <div class="hero-text-block">
+        <span class="hero-badge">A DEDICATED</span>
+        <h1 class="hero-title-solid">OPERATIONS</h1>
+        <h2 class="hero-title-hollow">ENGINEER</h2>
+        <p class="hero-desc">
+          Customer Care Analyst at <strong>Sana Labs / Workday</strong>. Maintaining 99.9% SLO uptime, owning high-impact release playbooks, and troubleshooting critical enterprise SaaS integrations.
+        </p>
+        <a href="#experience" class="cta-btn">
+          Explore Experience 
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- What I Do Section (00:00:03) -->
+    <section id="services">
+      <span class="section-tag">// WHAT I DO</span>
+      <h2 class="section-heading">Operational Disciplines</h2>
+
+      <div class="what-i-do-grid">
+        <div class="service-card">
+          <span class="card-icon">⚡</span>
+          <h3 class="service-title">P1/P2 Incident Triage & RCA</h3>
+          <p class="service-body">
+            War-room orchestration, rapid triage, root-cause investigations, and preventive runbook development across high-volume production microservices.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <span class="card-icon">🚀</span>
+          <h3 class="service-title">Release Rollout & Rollbacks</h3>
+          <p class="service-body">
+            End-to-end execution of 10+ monthly release calls with strict playbook adherence, stakeholder sync, and pre/post deployment verification.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <span class="card-icon">📊</span>
+          <h3 class="service-title">SLI / SLO Monitoring</h3>
+          <p class="service-body">
+            Engineering proactive telemetry dashboards in Grafana to monitor latency spikes, API health, and ensure consistent 99.9% uptime compliance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section (00:00:05) -->
+    <section id="experience">
+      <span class="section-tag">// TIMELINE</span>
+      <h2 class="section-heading">Career & Experience</h2>
+
+      <div class="experience-container">
+        <div class="exp-nav">
+          <button class="exp-tab active" onclick="switchExp(0)">
+            <span>Sana / Workday</span>
+            <span class="tab-year">NOW</span>
+          </button>
+          <button class="exp-tab" onclick="switchExp(1)">
+            <span>BetterPlace</span>
+            <span class="tab-year">2024</span>
+          </button>
+          <button class="exp-tab" onclick="switchExp(2)">
+            <span>Nextuple</span>
+            <span class="tab-year">2022-24</span>
+          </button>
+          <button class="exp-tab" onclick="switchExp(3)">
+            <span>TechGyan</span>
+            <span class="tab-year">2022</span>
+          </button>
+        </div>
+
+        <div class="exp-details-panel" id="expPanel">
+          <h3 class="exp-role-title">Customer Care Analyst</h3>
+          <span class="exp-company-sub">Sana Labs / Workday — Present</span>
+          <ul class="exp-points-list">
+            <li>Owning high-severity technical support across AI learning workflows and Workday integration pipelines.</li>
+            <li>Partnering directly with platform engineers to triage edge-case API synchronization failures and escalate reproducible bug telemetry.</li>
+            <li>Writing and standardizing technical knowledge bases for distributed tier-1 customer success teams.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Showcase (00:00:07) -->
+    <section id="projects">
+      <span class="section-tag">// HIGHLIGHTS</span>
+      <h2 class="section-heading">Operational Systems & Impact</h2>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-index">01</span>
+            <span class="project-badge">MONITORING</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">Grafana SLI/SLO Telemetry Grid</h3>
+            <p class="project-desc">Real-time health monitor tracking microservice error rates, latency percentiles, and automated alerting thresholds.</p>
+            <div class="project-tags">
+              <span class="tag-pill">Grafana</span>
+              <span class="tag-pill">Prometheus</span>
+              <span class="tag-pill">SLO/SLI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-index">02</span>
+            <span class="project-badge">AUTOMATION</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">High-Volume Triage Engine</h3>
+            <p class="project-desc">Processed 200+ daily tickets across Jira and Zendesk with automated categorization, priority tags, and root-cause mapping.</p>
+            <div class="project-tags">
+              <span class="tag-pill">Zendesk</span>
+              <span class="tag-pill">Jira Service Desk</span>
+              <span class="tag-pill">SQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-card-header">
+            <span class="project-index">03</span>
+            <span class="project-badge">AI OPS</span>
+          </div>
+          <div class="project-content">
+            <h3 class="project-name">Generative AI Knowledge Engine</h3>
+            <p class="project-desc">Implemented prompt workflows and LLM document synthesizers to automatically draft runbooks from resolved incident post-mortems.</p>
+            <div class="project-tags">
+              <span class="tag-pill">LLMs</span>
+              <span class="tag-pill">Python</span>
+              <span class="tag-pill">LangChain</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Physics Techstack (00:00:09) -->
+    <section id="techstack">
+      <span class="section-tag">// TOOLCHAIN</span>
+      <h2 class="section-heading">Interactive Tech Stack</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Interactive physics engine. Click, drag, and toss the skill spheres:</p>
+
+      <div class="physics-canvas-box">
+        <canvas id="techCanvas"></canvas>
+        <div class="canvas-hint">DRAG & TOSS ANY SPHERE</div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <div>© 2026 Hemanth Desai — Support Operations & AI Engineer</div>
+      <div>
+        Reach out: <a href="mailto:hemanthdesai1@gmail.com">hemanthdesai1@gmail.com</a>
+      </div>
+    </footer>
+
   </div>
 
   <script>
-    // Audio synthesizer for click blips
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playBeep(freq = 440, type = 'sine', duration = 0.08) {
-      if (!voiceEnabled) return;
-      try {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
-    }
-
-    // Voice Synthesis Settings
-    let voiceEnabled = true;
-    function toggleVoice() {
-      voiceEnabled = !voiceEnabled;
-      const btn = document.getElementById('voiceToggleBtn');
-      const text = document.getElementById('voiceStatusText');
-      const icon = document.getElementById('soundStatusIcon');
-      if (voiceEnabled) {
-        btn.classList.add('active');
-        text.innerText = 'ON';
-        icon.innerText = '🔊';
-        speakText("AI Voice activated.");
-      } else {
-        btn.classList.remove('active');
-        text.innerText = 'MUTED';
-        icon.innerText = '🔇';
-        window.speechSynthesis.cancel();
+    // 1. Dynamic Experience Panel Switcher
+    const experiences = [
+      {
+        role: "Customer Care Analyst",
+        company: "Sana Labs / Workday — Present",
+        points: [
+          "Owning high-severity technical support across AI learning workflows and Workday integration pipelines.",
+          "Partnering directly with platform engineers to triage edge-case API synchronization failures and escalate reproducible bug telemetry.",
+          "Standardizing technical runbooks and training materials for distributed tier-1 customer success teams."
+        ]
+      },
+      {
+        role: "Product Support Engineer",
+        company: "BetterPlace — Aug 2024 to Present",
+        points: [
+          "Supported enterprise HR tech platform covering Attendance, Payroll, and Upskilling modules.",
+          "Triaged 200+ support requests daily across Jira & Zendesk while maintaining clean ticket hygiene.",
+          "Analyzed recurring patterns and drove root-cause remediations with development teams."
+        ]
+      },
+      {
+        role: "Product Support Engineer",
+        company: "Nextuple — Oct 2022 to Jul 2024",
+        points: [
+          "Led 10+ monthly production release calls end-to-end with full playbook and rollback accountability.",
+          "Built and maintained SLI/SLO dashboards in Grafana for stakeholder visibility into platform availability.",
+          "Managed P1/P2 incidents from initial triage to cross-team post-mortems."
+        ]
+      },
+      {
+        role: "Customer Support Engineer",
+        company: "TechGyan — Jan 2022 to Sep 2022",
+        points: [
+          "Provided empathetic, high-velocity technical support for enterprise Microsoft 365 tenants.",
+          "Recorded detailed case logs in Microsoft Dynamics 365 CRM, expanding reusable knowledge assets.",
+          "Conducted internal knowledge transfers to accelerate average resolution time."
+        ]
       }
-    }
+    ];
 
-    function speakText(text) {
-      if (!voiceEnabled || !('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 1.05;
-      utterance.pitch = 1.0;
-      window.speechSynthesis.speak(utterance);
-    }
+    function switchExp(idx) {
+      const tabs = document.querySelectorAll('.exp-tab');
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === idx);
+      });
 
-    // Avatar Dialogue Interactions
-    const avatarDialogues = {
-      intro: "Hi! I'm Hemanth Desai. Customer Care Analyst at Sana Labs and Workday, dedicated to keeping enterprise systems running at 99.9% uptime.",
-      sana: "At Sana Labs and Workday, I focus on AI-driven learning platform operations, resolving complex integration edge cases and escalating defects directly to engineering.",
-      releases: "I've owned over 10 monthly production releases end-to-end, writing detailed deployment playbooks, handling health validation, and leading rollback contingencies.",
-      ai: "I actively build with Generative AI and LLM frameworks to automate support triage and generate real-time knowledge base articles."
-    };
-
-    function askAvatar(topic) {
-      playBeep(520, 'triangle');
-      const text = avatarDialogues[topic];
-      const bubble = document.getElementById('avatarSpeech');
-      bubble.style.opacity = '0';
+      const exp = experiences[idx];
+      const panel = document.getElementById('expPanel');
+      panel.style.opacity = 0;
       setTimeout(() => {
-        bubble.innerText = `"${text}"`;
-        bubble.style.opacity = '1';
-        speakText(text);
+        panel.innerHTML = `
+          <h3 class="exp-role-title">${exp.role}</h3>
+          <span class="exp-company-sub">${exp.company}</span>
+          <ul class="exp-points-list">
+            ${exp.points.map(p => `<li>${p}</li>`).join('')}
+          </ul>
+        `;
+        panel.style.opacity = 1;
       }, 150);
     }
 
-    function sayGreeting() {
-      askAvatar('intro');
+    // 2. Interactive 2D Physics Tech Stack Canvas (Replicating 00:00:09)
+    const canvas = document.getElementById('techCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const skills = [
+      'Workday', 'Grafana', 'Zendesk', 'Jira', 'SQL',
+      'Python', 'Docker', 'Postman', 'LLMs', 'Prompt Eng',
+      'Dynamics 365', 'SLO/SLI', 'RCA', 'Git', 'Linux'
+    ];
+
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Ball {
+      constructor(label, x, y) {
+        this.label = label;
+        this.radius = 42;
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 4;
+        this.vy = (Math.random() - 0.5) * 4;
+        this.friction = 0.985;
+        this.gravity = 0.15;
+      }
+
+      update() {
+        this.vy += this.gravity;
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Wall collisions
+        if (this.x - this.radius < 0) {
+          this.x = this.radius;
+          this.vx *= -0.7;
+        } else if (this.x + this.radius > width) {
+          this.x = width - this.radius;
+          this.vx *= -0.7;
+        }
+
+        // Floor / Ceiling collisions
+        if (this.y - this.radius < 0) {
+          this.y = this.radius;
+          this.vy *= -0.7;
+        } else if (this.y + this.radius > height) {
+          this.y = height - this.radius;
+          this.vy *= -0.7;
+        }
+      }
+
+      draw() {
+        ctx.save();
+        // Outer glow circle
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        const grad = ctx.createRadialGradient(
+          this.x - 10, this.y - 10, 5,
+          this.x, this.y, this.radius
+        );
+        grad.addColorStop(0, '#2d2345');
+        grad.addColorStop(1, '#131521');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '600 11px "Space Grotesk", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.label, this.x, this.y);
+        ctx.restore();
+      }
     }
 
-    // Interactive Terminal Logic
-    const termInput = document.getElementById('termInput');
-    const termLog = document.getElementById('terminalLog');
+    const balls = skills.map((label, i) => {
+      const x = 70 + (i % 5) * 90;
+      const y = 50 + Math.floor(i / 5) * 80;
+      return new Ball(label, x, y);
+    });
 
-    const commands = {
-      help: "Available commands:\n  • status      - Show current system and job status\n  • skills      - Display technical toolchain\n  • experience  - Summary of roles at Sana, BetterPlace, Nextuple\n  • incident    - Trigger emergency triage war room\n  • clear       - Clear the terminal screen",
-      status: "[ONLINE] Hemanth Desai\nRole: Customer Care Analyst @ Sana Labs / Workday\nSLO Health: 99.9% Uptime\nP1 Incidents: 0 active",
-      skills: "Tools: Grafana, Jira, Zendesk, SQL, Python, Microsoft Dynamics 365, Postman\nFrameworks: Generative AI, LLM Automation, Incident Management Playbooks",
-      experience: "• Sana Labs / Workday: Customer Care Analyst\n• BetterPlace: Product Support Engineer (200+ tickets/day, HR Tech)\n• Nextuple: Product Support Engineer (10+ release calls/month, Grafana)\n• TechGyan: Customer Support Engineer (Microsoft 365)",
-      incident: () => { openWarRoom(); return "Launching War Room simulator..."; }
-    };
+    // Handle Ball-to-Ball Collision
+    function handleCollisions() {
+      for (let i = 0; i < balls.length; i++) {
+        for (let j = i + 1; j < balls.length; j++) {
+          const dx = balls[j].x - balls[i].x;
+          const dy = balls[j].y - balls[i].y;
+          const dist = Math.hypot(dx, dy);
+          const minDist = balls[i].radius + balls[j].radius;
 
-    termInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        playBeep(600, 'square', 0.05);
-        const input = this.value.trim().toLowerCase();
-        this.value = '';
-        if (!input) return;
+          if (dist < minDist) {
+            const angle = Math.atan2(dy, dx);
+            const tx = balls[i].x + Math.cos(angle) * minDist;
+            const ty = balls[i].y + Math.sin(angle) * minDist;
+            const ax = (tx - balls[j].x) * 0.5;
+            const ay = (ty - balls[j].y) * 0.5;
 
-        termLog.innerText += `\n$ ${input}\n`;
-
-        if (input === 'clear') {
-          termLog.innerText = "Console cleared.\n";
-          return;
+            balls[i].vx -= ax;
+            balls[i].vy -= ay;
+            balls[j].vx += ax;
+            balls[j].vy += ay;
+          }
         }
+      }
+    }
 
-        if (commands[input]) {
-          const res = typeof commands[input] === 'function' ? commands[input]() : commands[input];
-          termLog.innerText += res + "\n";
-        } else {
-          termLog.innerText += `Command not recognized: '${input}'. Type 'help' for options.\n`;
+    // Mouse Dragging & Throwing
+    let draggedBall = null;
+    let lastMouseX = 0, lastMouseY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      balls.forEach(b => {
+        if (Math.hypot(b.x - mx, b.y - my) < b.radius) {
+          draggedBall = b;
+          lastMouseX = mx;
+          lastMouseY = my;
         }
-        termLog.scrollTop = termLog.scrollHeight;
+      });
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (draggedBall) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        draggedBall.vx = (mx - lastMouseX) * 0.8;
+        draggedBall.vy = (my - lastMouseY) * 0.8;
+        draggedBall.x = mx;
+        draggedBall.y = my;
+        lastMouseX = mx;
+        lastMouseY = my;
       }
     });
 
-    // P1 Incident Mini-Game Modal Logic
-    function openWarRoom() {
-      playBeep(240, 'sawtooth', 0.2);
-      document.getElementById('warRoomModal').classList.add('active');
+    window.addEventListener('mouseup', () => {
+      draggedBall = null;
+    });
+
+    // Main Canvas Render Loop
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      handleCollisions();
+      balls.forEach(b => {
+        b.update();
+        b.draw();
+      });
+      requestAnimationFrame(animate);
     }
-
-    function closeWarRoom() {
-      document.getElementById('warRoomModal').classList.remove('active');
-    }
-
-    function nextWarRoomStep(step, success) {
-      const container = document.getElementById('modalStepContent');
-      playBeep(success ? 650 : 200, 'sine', 0.1);
-
-      if (!success) {
-        container.innerHTML = `
-          <p class="modal-step-text" style="color: #ef4444;">
-            ⚠️ Blindly restarting clusters without diagnostic logs caused a cascading failover!
-          </p>
-          <button class="choice-btn" onclick="openWarRoom()">Try Again</button>
-        `;
-        return;
-      }
-
-      if (step === 1) {
-        container.innerHTML = `
-          <p class="modal-step-text">
-            ✅ Telemetry shows API payload timeouts on the recent release build (v2.4.1).<br>
-            What is your resolution action?
-          </p>
-          <button class="choice-btn" onclick="nextWarRoomStep(2, true)">⚡ Execute documented rollback playbook to v2.4.0</button>
-          <button class="choice-btn" onclick="nextWarRoomStep(2, false)">⏳ Wait 2 hours to see if latency clears itself</button>
-        `;
-      } else if (step === 2) {
-        container.innerHTML = `
-          <p class="modal-step-text" style="color: #10b981;">
-            🎉 <strong>INCIDENT MITIGATED!</strong><br>
-            Services restored within SLO limits. 99.9% uptime preserved.<br>
-            Root Cause Analysis (RCA) documented for engineering.
-          </p>
-          <button class="choice-btn" style="background: var(--success); color: #fff; font-weight: 700; border: none;" onclick="closeWarRoom()">Return to Mission Control</button>
-        `;
-        speakText("Incident mitigated successfully. Service level targets preserved.");
-      }
-    }
+    animate();
   </script>
 </body>
 </html>
