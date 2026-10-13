@@ -3,24 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hemanth Desai | Support Operations & AI Engineer</title>
+  <title>Hemanth R Desai | Support Operations Professional</title>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Spline 3D Web Component -->
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #090a0f;
-      --card-bg: rgba(18, 20, 29, 0.75);
+      --bg: #090a10;
+      --card-bg: rgba(18, 21, 32, 0.75);
       --card-border: rgba(255, 255, 255, 0.08);
-      --purple-glow: #a855f7;
-      --cyan-glow: #38bdf8;
-      --accent: #c084fc;
+      --accent: #38bdf8;
+      --purple: #a855f7;
       --text-white: #ffffff;
       --text-muted: #94a3b8;
       --sidebar-width: 70px;
@@ -44,20 +39,20 @@
       line-height: 1.6;
     }
 
-    /* Ambient Spotlight Background */
+    /* Ambient lighting */
     .spotlight {
       position: fixed;
-      top: -20%;
+      top: -15%;
       left: 30%;
       width: 700px;
       height: 700px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(56, 189, 248, 0.08) 45%, transparent 70%);
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, rgba(168, 85, 247, 0.1) 45%, transparent 70%);
       filter: blur(80px);
       z-index: -1;
       pointer-events: none;
     }
 
-    /* Left Floating Social & Utility Rail */
+    /* Left Floating Rail */
     .side-rail {
       position: fixed;
       top: 0;
@@ -71,14 +66,14 @@
       align-items: center;
       padding: 2rem 0;
       z-index: 100;
-      background: rgba(9, 10, 15, 0.6);
-      backdrop-filter: blur(10px);
+      background: rgba(9, 10, 16, 0.7);
+      backdrop-filter: blur(12px);
     }
 
     .rail-logo {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       letter-spacing: 1px;
       color: var(--accent);
     }
@@ -93,7 +88,7 @@
       color: var(--text-muted);
       text-decoration: none;
       font-size: 1rem;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -112,11 +107,11 @@
       letter-spacing: 2px;
     }
 
-    /* Main Viewport Container */
+    /* Viewport Area */
     .viewport-content {
       margin-left: var(--sidebar-width);
-      padding: 0 3rem;
-      max-width: 1350px;
+      padding: 0 3.5rem;
+      max-width: 1400px;
     }
 
     @media (max-width: 768px) {
@@ -124,7 +119,6 @@
       .viewport-content { margin-left: 0; padding: 0 1.25rem; }
     }
 
-    /* Top Navbar */
     nav {
       height: 90px;
       display: flex;
@@ -134,15 +128,14 @@
 
     .brand-title {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       letter-spacing: 2px;
-      text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
-      gap: 2.2rem;
+      gap: 2rem;
       list-style: none;
     }
 
@@ -153,63 +146,123 @@
       font-weight: 600;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      transition: color 0.2s ease;
+      transition: color 0.2s;
     }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--text-white);
+    .nav-links a:hover {
+      color: #fff;
     }
 
     /* HERO SECTION */
     .hero-section {
       min-height: calc(100vh - 90px);
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1fr 1.15fr;
       align-items: center;
-      gap: 2rem;
-      position: relative;
+      gap: 3.5rem;
+      padding-bottom: 3rem;
     }
 
     @media (max-width: 992px) {
       .hero-section {
         grid-template-columns: 1fr;
-        padding-bottom: 4rem;
+        text-align: center;
       }
     }
 
-    .avatar-canvas-box {
+    /* 3D Anime Holographic Avatar Card */
+    .avatar-3d-scene {
+      perspective: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .avatar-card {
       width: 100%;
-      height: 520px;
+      max-width: 440px;
+      height: 540px;
       position: relative;
-      border-radius: 24px;
-      background: radial-gradient(circle at center, rgba(30, 27, 46, 0.45) 0%, rgba(9, 10, 15, 0.8) 70%);
-      border: 1px solid var(--card-border);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border-radius: 28px;
+      background: #0f131f;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(56, 189, 248, 0.2);
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      cursor: pointer;
       overflow: hidden;
     }
 
-    spline-viewer {
-      width: 100%;
-      height: 100%;
+    .avatar-img-layer {
+      position: absolute;
+      inset: 0;
+      background: url('20260612_163931.jpg') center top / cover no-repeat;
+      filter: saturate(1.25) contrast(1.15) brightness(0.95);
+      border-radius: 28px;
+      transition: transform 0.2s ease;
     }
 
-    .hero-text-block {
-      padding-left: 1.5rem;
+    /* Holographic Anime Cel-Shading Overlays */
+    .anime-cel-filter {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.15) 0%, rgba(9, 10, 16, 0.8) 90%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
     }
 
-    .hero-badge {
-      display: inline-block;
+    .hologram-grid {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.04) 0px,
+        rgba(255, 255, 255, 0.04) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+    }
+
+    .avatar-badge-3d {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      background: rgba(15, 23, 42, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 1rem 1.25rem;
+      border-radius: 16px;
+      transform: translateZ(45px);
+    }
+
+    .avatar-badge-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .avatar-badge-sub {
+      font-size: 0.78rem;
+      color: var(--accent);
       font-family: 'Fira Code', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 2.5px;
-      color: var(--text-muted);
+    }
+
+    /* Hero Text */
+    .hero-name-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
+      display: inline-block;
     }
 
     .hero-title-solid {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1px;
@@ -219,7 +272,7 @@
 
     .hero-title-hollow {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1px;
@@ -232,7 +285,7 @@
     .hero-desc {
       color: var(--text-muted);
       font-size: 1.05rem;
-      max-width: 480px;
+      max-width: 520px;
       margin-bottom: 2rem;
     }
 
@@ -241,7 +294,7 @@
       align-items: center;
       gap: 0.6rem;
       background: #fff;
-      color: #090a0f;
+      color: #090a10;
       font-weight: 700;
       padding: 0.85rem 1.8rem;
       border-radius: 999px;
@@ -253,15 +306,13 @@
     }
     .cta-btn:hover {
       background: var(--accent);
-      color: #fff;
+      color: #04101e;
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.4);
     }
 
-    /* SECTION BASICS */
-    section {
-      padding: 6rem 0;
-    }
+    /* Section Basics */
+    section { padding: 5rem 0; }
 
     .section-tag {
       font-family: 'Fira Code', monospace;
@@ -275,67 +326,46 @@
 
     .section-heading {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.4rem;
+      font-size: 2.2rem;
       font-weight: 700;
       letter-spacing: -0.5px;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
-    /* ABOUT & WHAT I DO */
-    .what-i-do-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.75rem;
-    }
-
-    .service-card {
-      background: var(--card-bg);
+    /* Physics Canvas */
+    .physics-canvas-box {
+      width: 100%;
+      height: 500px;
+      background: radial-gradient(circle at center, rgba(30, 41, 59, 0.3) 0%, rgba(9, 10, 16, 0.95) 80%);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 2.2rem;
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
+      border-radius: 24px;
       position: relative;
       overflow: hidden;
+      margin-top: 1.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    .service-card:hover {
-      border-color: rgba(168, 85, 247, 0.4);
-      transform: translateY(-5px);
-    }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
+
+    #techCanvas {
       width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
+      height: 100%;
+      display: block;
+      cursor: grab;
     }
-    .service-card:hover::before {
-      opacity: 1;
-    }
+    #techCanvas:active { cursor: grabbing; }
 
-    .card-icon {
-      font-size: 2rem;
-      margin-bottom: 1.25rem;
-      display: inline-block;
-    }
-
-    .service-title {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 0.75rem;
-    }
-
-    .service-body {
+    .canvas-hint {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
+      pointer-events: none;
+      letter-spacing: 1px;
     }
 
-    /* EXPERIENCE SECTION (Replicating 00:00:05) */
+    /* Experience Tabs */
     .experience-container {
       display: grid;
       grid-template-columns: 320px 1fr;
@@ -379,8 +409,8 @@
     }
     .exp-tab.active {
       color: #fff;
-      background: rgba(168, 85, 247, 0.12);
-      border-color: rgba(168, 85, 247, 0.35);
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.35);
     }
     .exp-tab .tab-year {
       font-family: 'Fira Code', monospace;
@@ -388,9 +418,7 @@
       color: var(--accent);
     }
 
-    .exp-details-panel {
-      padding: 0.5rem 1rem;
-    }
+    .exp-details-panel { padding: 0.5rem 1rem; }
 
     .exp-role-title {
       font-size: 1.45rem;
@@ -426,117 +454,6 @@
       line-height: 1;
     }
 
-    /* PROJECTS CARDS (Replicating 00:00:07) */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-    .project-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(168, 85, 247, 0.4);
-    }
-
-    .project-card-header {
-      padding: 1.75rem 1.75rem 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .project-index {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: rgba(255, 255, 255, 0.2);
-    }
-
-    .project-badge {
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-family: 'Fira Code', monospace;
-    }
-
-    .project-content {
-      padding: 1rem 1.75rem 2rem;
-    }
-
-    .project-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag-pill {
-      font-family: 'Fira Code', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.25rem 0.55rem;
-      border-radius: 6px;
-    }
-
-    /* PHYSICS TECH STACK CANVAS (Replicating 00:00:09) */
-    .physics-canvas-box {
-      width: 100%;
-      height: 480px;
-      background: radial-gradient(circle at center, rgba(168, 85, 247, 0.08) 0%, rgba(9, 10, 15, 0.95) 80%);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      position: relative;
-      overflow: hidden;
-      margin-top: 1.5rem;
-    }
-
-    #techCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      cursor: grab;
-    }
-    #techCanvas:active {
-      cursor: grabbing;
-    }
-
-    .canvas-hint {
-      position: absolute;
-      bottom: 1.25rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      pointer-events: none;
-      letter-spacing: 1px;
-    }
-
-    /* FOOTER */
     footer {
       border-top: 1px solid var(--card-border);
       padding: 3rem 0;
@@ -549,22 +466,16 @@
       font-size: 0.85rem;
       margin-top: 4rem;
     }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+    footer a { color: var(--accent); text-decoration: none; }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Light -->
   <div class="spotlight"></div>
 
-  <!-- Left Action & Social Rail -->
+  <!-- Left Sidebar Rail -->
   <aside class="side-rail">
-    <div class="rail-logo">HD</div>
-    
+    <div class="rail-logo">HRD</div>
     <div class="rail-socials">
       <a href="https://linkedin.com/in/hemanth-desai-879208134" target="_blank" class="rail-link" title="LinkedIn">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
@@ -572,88 +483,67 @@
       <a href="mailto:hemanthdesai1@gmail.com" class="rail-link" title="Email">
         <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
       </a>
-      <a href="#contact" class="rail-link" title="Terminal">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-      </a>
     </div>
-
     <div class="rail-indicator">
-      HEMANTH // PORTFOLIO
+      HEMANTH R DESAI // OPS
     </div>
   </aside>
 
-  <!-- Main Content Body -->
   <div class="viewport-content">
     
-    <!-- Navigation -->
     <nav>
-      <div class="brand-title">PORTFOLIO</div>
+      <div class="brand-title">HEMANTH R DESAI</div>
       <ul class="nav-links">
-        <li><a href="#about" class="active">About</a></li>
-        <li><a href="#services">What I Do</a></li>
+        <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Work</a></li>
-        <li><a href="#techstack">Techstack</a></li>
+        <li><a href="#techstack">Tech Stack</a></li>
       </ul>
     </nav>
 
-    <!-- Hero Section (00:00:01) -->
-    <section class="hero-section" id="hero">
-      <div class="avatar-canvas-box">
-        <!-- Live Spline 3D Scene -->
-        <spline-viewer url="https://prod.spline.design/6W-t8MYQ7ZE-iL3O/scene.splinecode"></spline-viewer>
+    <!-- HERO SECTION WITH INTERACTIVE 3D ANIME AVATAR -->
+    <section class="hero-section" id="about">
+      <div class="avatar-3d-scene">
+        <div class="avatar-card" id="avatarCard">
+          <div class="avatar-img-layer" id="avatarImg"></div>
+          <div class="anime-cel-filter"></div>
+          <div class="hologram-grid"></div>
+          <div class="avatar-badge-3d">
+            <div class="avatar-badge-title">Hemanth R Desai</div>
+            <div class="avatar-badge-sub">// Customer Care Analyst @ Sana / Workday</div>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-text-block">
-        <span class="hero-badge">A DEDICATED</span>
-        <h1 class="hero-title-solid">OPERATIONS</h1>
-        <h2 class="hero-title-hollow">ENGINEER</h2>
+      <div>
+        <div class="hero-name-badge">HEMANTH R DESAI</div>
+        <h1 class="hero-title-solid">SUPPORT OPERATIONS</h1>
+        <h2 class="hero-title-hollow">PROFESSIONAL</h2>
         <p class="hero-desc">
-          Customer Care Analyst at <strong>Sana Labs / Workday</strong>. Maintaining 99.9% SLO uptime, owning high-impact release playbooks, and troubleshooting critical enterprise SaaS integrations.
+          Customer Care Analyst at <strong>Sana Labs / Workday</strong>. Specializing in 99.9% uptime management, release orchestrations, root cause analysis (RCA), and AI-driven automation.
         </p>
         <a href="#experience" class="cta-btn">
-          Explore Experience 
+          View Experience Playbook
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </section>
 
-    <!-- What I Do Section (00:00:03) -->
-    <section id="services">
-      <span class="section-tag">// WHAT I DO</span>
-      <h2 class="section-heading">Operational Disciplines</h2>
+    <!-- Interactive Physics Tech Stack with Brand Logos -->
+    <section id="techstack">
+      <span class="section-tag">// TOOLCHAIN</span>
+      <h2 class="section-heading">Interactive Tech Stack</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Interactive physics engine with real brand logos. Drag and toss the balls:</p>
 
-      <div class="what-i-do-grid">
-        <div class="service-card">
-          <span class="card-icon">⚡</span>
-          <h3 class="service-title">P1/P2 Incident Triage & RCA</h3>
-          <p class="service-body">
-            War-room orchestration, rapid triage, root-cause investigations, and preventive runbook development across high-volume production microservices.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <span class="card-icon">🚀</span>
-          <h3 class="service-title">Release Rollout & Rollbacks</h3>
-          <p class="service-body">
-            End-to-end execution of 10+ monthly release calls with strict playbook adherence, stakeholder sync, and pre/post deployment verification.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <span class="card-icon">📊</span>
-          <h3 class="service-title">SLI / SLO Monitoring</h3>
-          <p class="service-body">
-            Engineering proactive telemetry dashboards in Grafana to monitor latency spikes, API health, and ensure consistent 99.9% uptime compliance.
-          </p>
-        </div>
+      <div class="physics-canvas-box">
+        <canvas id="techCanvas"></canvas>
+        <div class="canvas-hint">DRAG & TOSS ANY LOGO SPHERE</div>
       </div>
     </section>
 
-    <!-- Experience Section (00:00:05) -->
+    <!-- Career Experience -->
     <section id="experience">
-      <span class="section-tag">// TIMELINE</span>
-      <h2 class="section-heading">Career & Experience</h2>
+      <span class="section-tag">// TRACK RECORD</span>
+      <h2 class="section-heading">Career Experience</h2>
 
       <div class="experience-container">
         <div class="exp-nav">
@@ -679,94 +569,222 @@
           <h3 class="exp-role-title">Customer Care Analyst</h3>
           <span class="exp-company-sub">Sana Labs / Workday — Present</span>
           <ul class="exp-points-list">
-            <li>Owning high-severity technical support across AI learning workflows and Workday integration pipelines.</li>
-            <li>Partnering directly with platform engineers to triage edge-case API synchronization failures and escalate reproducible bug telemetry.</li>
-            <li>Writing and standardizing technical knowledge bases for distributed tier-1 customer success teams.</li>
+            <li>Leading tier-2/tier-3 escalation response across AI learning ecosystems and Workday integration endpoints.</li>
+            <li>Collaborating with core engineering pods to triage API payloads and deliver telemetry logs for rapid resolution.</li>
+            <li>Authoring detailed runbooks and standard operating procedures for distributed support reps.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Work Showcase (00:00:07) -->
-    <section id="projects">
-      <span class="section-tag">// HIGHLIGHTS</span>
-      <h2 class="section-heading">Operational Systems & Impact</h2>
-
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-card-header">
-            <span class="project-index">01</span>
-            <span class="project-badge">MONITORING</span>
-          </div>
-          <div class="project-content">
-            <h3 class="project-name">Grafana SLI/SLO Telemetry Grid</h3>
-            <p class="project-desc">Real-time health monitor tracking microservice error rates, latency percentiles, and automated alerting thresholds.</p>
-            <div class="project-tags">
-              <span class="tag-pill">Grafana</span>
-              <span class="tag-pill">Prometheus</span>
-              <span class="tag-pill">SLO/SLI</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-card-header">
-            <span class="project-index">02</span>
-            <span class="project-badge">AUTOMATION</span>
-          </div>
-          <div class="project-content">
-            <h3 class="project-name">High-Volume Triage Engine</h3>
-            <p class="project-desc">Processed 200+ daily tickets across Jira and Zendesk with automated categorization, priority tags, and root-cause mapping.</p>
-            <div class="project-tags">
-              <span class="tag-pill">Zendesk</span>
-              <span class="tag-pill">Jira Service Desk</span>
-              <span class="tag-pill">SQL</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-card-header">
-            <span class="project-index">03</span>
-            <span class="project-badge">AI OPS</span>
-          </div>
-          <div class="project-content">
-            <h3 class="project-name">Generative AI Knowledge Engine</h3>
-            <p class="project-desc">Implemented prompt workflows and LLM document synthesizers to automatically draft runbooks from resolved incident post-mortems.</p>
-            <div class="project-tags">
-              <span class="tag-pill">LLMs</span>
-              <span class="tag-pill">Python</span>
-              <span class="tag-pill">LangChain</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactive Physics Techstack (00:00:09) -->
-    <section id="techstack">
-      <span class="section-tag">// TOOLCHAIN</span>
-      <h2 class="section-heading">Interactive Tech Stack</h2>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">Interactive physics engine. Click, drag, and toss the skill spheres:</p>
-
-      <div class="physics-canvas-box">
-        <canvas id="techCanvas"></canvas>
-        <div class="canvas-hint">DRAG & TOSS ANY SPHERE</div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-      <div>© 2026 Hemanth Desai — Support Operations & AI Engineer</div>
-      <div>
-        Reach out: <a href="mailto:hemanthdesai1@gmail.com">hemanthdesai1@gmail.com</a>
-      </div>
+    <footer>
+      <div>© 2026 Hemanth R Desai — Support Operations Professional</div>
+      <div>Contact: <a href="mailto:hemanthdesai1@gmail.com">hemanthdesai1@gmail.com</a></div>
     </footer>
 
   </div>
 
   <script>
-    // 1. Dynamic Experience Panel Switcher
+    // 1. 3D Holographic Tilt Effect on Photo Card
+    const card = document.getElementById('avatarCard');
+    const imgLayer = document.getElementById('avatarImg');
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      const rotX = -(y / (rect.height / 2)) * 14;
+      const rotY = (x / (rect.width / 2)) * 14;
+
+      card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+      imgLayer.style.transform = `scale(1.08) translate(${-rotY * 0.8}px, ${rotX * 0.8}px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+      imgLayer.style.transform = `scale(1) translate(0px, 0px)`;
+    });
+
+    // 2. Physics Canvas with Official Brand Logos
+    const canvas = document.getElementById('techCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const tools = [
+      { name: 'Workday', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/workday.svg', bg: '#0875e1' },
+      { name: 'Grafana', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/grafana.svg', bg: '#F46800' },
+      { name: 'Zendesk', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/zendesk.svg', bg: '#03363D' },
+      { name: 'Jira', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/jira.svg', bg: '#0052CC' },
+      { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/postgresql.svg', bg: '#4169E1' },
+      { name: 'Python', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/python.svg', bg: '#3776AB' },
+      { name: 'Docker', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/docker.svg', bg: '#2496ED' },
+      { name: 'Postman', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/postman.svg', bg: '#FF6C37' },
+      { name: 'Anthropic', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anthropic.svg', bg: '#D97757' },
+      { name: 'OpenAI', logo: 'https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg', bg: '#10A37F' }
+    ];
+
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.parentElement.clientWidth;
+      height = canvas.parentElement.clientHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Ball {
+      constructor(tool, x, y) {
+        this.name = tool.name;
+        this.bg = tool.bg;
+        this.radius = 42;
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 4;
+        this.vy = (Math.random() - 0.5) * 4;
+        this.friction = 0.985;
+        this.gravity = 0.16;
+        
+        this.img = new Image();
+        this.img.crossOrigin = 'anonymous';
+        this.img.src = tool.logo;
+      }
+
+      update() {
+        this.vy += this.gravity;
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x - this.radius < 0) {
+          this.x = this.radius;
+          this.vx *= -0.7;
+        } else if (this.x + this.radius > width) {
+          this.x = width - this.radius;
+          this.vx *= -0.7;
+        }
+
+        if (this.y - this.radius < 0) {
+          this.y = this.radius;
+          this.vy *= -0.7;
+        } else if (this.y + this.radius > height) {
+          this.y = height - this.radius;
+          this.vy *= -0.7;
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        
+        // Gradient fill
+        const grad = ctx.createRadialGradient(
+          this.x - 8, this.y - 8, 4,
+          this.x, this.y, this.radius
+        );
+        grad.addColorStop(0, '#1e2438');
+        grad.addColorStop(1, '#0c0f18');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Render Brand Logo
+        const iconSize = 28;
+        if (this.img.complete && this.img.naturalWidth !== 0) {
+          ctx.drawImage(this.img, this.x - iconSize / 2, this.y - iconSize / 2 - 4, iconSize, iconSize);
+        }
+
+        // Render Name Label
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '600 10px "Space Grotesk", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(this.name, this.x, this.y + 22);
+
+        ctx.restore();
+      }
+    }
+
+    const balls = tools.map((tool, i) => {
+      const x = 70 + (i % 5) * 95;
+      const y = 60 + Math.floor(i / 5) * 90;
+      return new Ball(tool, x, y);
+    });
+
+    function handleCollisions() {
+      for (let i = 0; i < balls.length; i++) {
+        for (let j = i + 1; j < balls.length; j++) {
+          const dx = balls[j].x - balls[i].x;
+          const dy = balls[j].y - balls[i].y;
+          const dist = Math.hypot(dx, dy);
+          const minDist = balls[i].radius + balls[j].radius;
+
+          if (dist < minDist) {
+            const angle = Math.atan2(dy, dx);
+            const tx = balls[i].x + Math.cos(angle) * minDist;
+            const ty = balls[i].y + Math.sin(angle) * minDist;
+            const ax = (tx - balls[j].x) * 0.5;
+            const ay = (ty - balls[j].y) * 0.5;
+
+            balls[i].vx -= ax;
+            balls[i].vy -= ay;
+            balls[j].vx += ax;
+            balls[j].vy += ay;
+          }
+        }
+      }
+    }
+
+    let draggedBall = null;
+    let lastMouseX = 0, lastMouseY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      balls.forEach(b => {
+        if (Math.hypot(b.x - mx, b.y - my) < b.radius) {
+          draggedBall = b;
+          lastMouseX = mx;
+          lastMouseY = my;
+        }
+      });
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (draggedBall) {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        draggedBall.vx = (mx - lastMouseX) * 0.8;
+        draggedBall.vy = (my - lastMouseY) * 0.8;
+        draggedBall.x = mx;
+        draggedBall.y = my;
+        lastMouseX = mx;
+        lastMouseY = my;
+      }
+    });
+
+    window.addEventListener('mouseup', () => { draggedBall = null; });
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      handleCollisions();
+      balls.forEach(b => {
+        b.update();
+        b.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 3. Experience Navigation
     const experiences = [
       {
         role: "Customer Care Analyst",
@@ -808,9 +826,7 @@
 
     function switchExp(idx) {
       const tabs = document.querySelectorAll('.exp-tab');
-      tabs.forEach((tab, i) => {
-        tab.classList.toggle('active', i === idx);
-      });
+      tabs.forEach((tab, i) => tab.classList.toggle('active', i === idx));
 
       const exp = experiences[idx];
       const panel = document.getElementById('expPanel');
@@ -826,172 +842,6 @@
         panel.style.opacity = 1;
       }, 150);
     }
-
-    // 2. Interactive 2D Physics Tech Stack Canvas (Replicating 00:00:09)
-    const canvas = document.getElementById('techCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const skills = [
-      'Workday', 'Grafana', 'Zendesk', 'Jira', 'SQL',
-      'Python', 'Docker', 'Postman', 'LLMs', 'Prompt Eng',
-      'Dynamics 365', 'SLO/SLI', 'RCA', 'Git', 'Linux'
-    ];
-
-    let width, height;
-    function resizeCanvas() {
-      width = canvas.parentElement.clientWidth;
-      height = canvas.parentElement.clientHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Ball {
-      constructor(label, x, y) {
-        this.label = label;
-        this.radius = 42;
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random() - 0.5) * 4;
-        this.vy = (Math.random() - 0.5) * 4;
-        this.friction = 0.985;
-        this.gravity = 0.15;
-      }
-
-      update() {
-        this.vy += this.gravity;
-        this.vx *= this.friction;
-        this.vy *= this.friction;
-
-        this.x += this.vx;
-        this.y += this.vy;
-
-        // Wall collisions
-        if (this.x - this.radius < 0) {
-          this.x = this.radius;
-          this.vx *= -0.7;
-        } else if (this.x + this.radius > width) {
-          this.x = width - this.radius;
-          this.vx *= -0.7;
-        }
-
-        // Floor / Ceiling collisions
-        if (this.y - this.radius < 0) {
-          this.y = this.radius;
-          this.vy *= -0.7;
-        } else if (this.y + this.radius > height) {
-          this.y = height - this.radius;
-          this.vy *= -0.7;
-        }
-      }
-
-      draw() {
-        ctx.save();
-        // Outer glow circle
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        const grad = ctx.createRadialGradient(
-          this.x - 10, this.y - 10, 5,
-          this.x, this.y, this.radius
-        );
-        grad.addColorStop(0, '#2d2345');
-        grad.addColorStop(1, '#131521');
-        ctx.fillStyle = grad;
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(168, 85, 247, 0.4)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        // Label
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '600 11px "Space Grotesk", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(this.label, this.x, this.y);
-        ctx.restore();
-      }
-    }
-
-    const balls = skills.map((label, i) => {
-      const x = 70 + (i % 5) * 90;
-      const y = 50 + Math.floor(i / 5) * 80;
-      return new Ball(label, x, y);
-    });
-
-    // Handle Ball-to-Ball Collision
-    function handleCollisions() {
-      for (let i = 0; i < balls.length; i++) {
-        for (let j = i + 1; j < balls.length; j++) {
-          const dx = balls[j].x - balls[i].x;
-          const dy = balls[j].y - balls[i].y;
-          const dist = Math.hypot(dx, dy);
-          const minDist = balls[i].radius + balls[j].radius;
-
-          if (dist < minDist) {
-            const angle = Math.atan2(dy, dx);
-            const tx = balls[i].x + Math.cos(angle) * minDist;
-            const ty = balls[i].y + Math.sin(angle) * minDist;
-            const ax = (tx - balls[j].x) * 0.5;
-            const ay = (ty - balls[j].y) * 0.5;
-
-            balls[i].vx -= ax;
-            balls[i].vy -= ay;
-            balls[j].vx += ax;
-            balls[j].vy += ay;
-          }
-        }
-      }
-    }
-
-    // Mouse Dragging & Throwing
-    let draggedBall = null;
-    let lastMouseX = 0, lastMouseY = 0;
-
-    canvas.addEventListener('mousedown', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-
-      balls.forEach(b => {
-        if (Math.hypot(b.x - mx, b.y - my) < b.radius) {
-          draggedBall = b;
-          lastMouseX = mx;
-          lastMouseY = my;
-        }
-      });
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (draggedBall) {
-        const rect = canvas.getBoundingClientRect();
-        const mx = e.clientX - rect.left;
-        const my = e.clientY - rect.top;
-        draggedBall.vx = (mx - lastMouseX) * 0.8;
-        draggedBall.vy = (my - lastMouseY) * 0.8;
-        draggedBall.x = mx;
-        draggedBall.y = my;
-        lastMouseX = mx;
-        lastMouseY = my;
-      }
-    });
-
-    window.addEventListener('mouseup', () => {
-      draggedBall = null;
-    });
-
-    // Main Canvas Render Loop
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      handleCollisions();
-      balls.forEach(b => {
-        b.update();
-        b.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
   </script>
 </body>
 </html>
