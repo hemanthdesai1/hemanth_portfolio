@@ -39,7 +39,6 @@
       line-height: 1.6;
     }
 
-    /* Ambient lighting */
     .spotlight {
       position: fixed;
       top: -15%;
@@ -107,7 +106,7 @@
       letter-spacing: 2px;
     }
 
-    /* Viewport Area */
+    /* Main Viewport Content */
     .viewport-content {
       margin-left: var(--sidebar-width);
       padding: 0 3.5rem;
@@ -169,7 +168,7 @@
       }
     }
 
-    /* 3D Anime Holographic Avatar Card */
+    /* 3D Holographic Anime Card */
     .avatar-3d-scene {
       perspective: 1200px;
       display: flex;
@@ -183,9 +182,9 @@
       height: 540px;
       position: relative;
       border-radius: 28px;
-      background: #0f131f;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(56, 189, 248, 0.2);
+      background: radial-gradient(circle at center, #1b2033 0%, #0c0f18 100%);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 45px rgba(56, 189, 248, 0.25);
       transform-style: preserve-3d;
       transition: transform 0.1s ease-out;
       cursor: pointer;
@@ -195,17 +194,18 @@
     .avatar-img-layer {
       position: absolute;
       inset: 0;
-      background: url('20260612_163931.jpg') center top / cover no-repeat;
-      filter: saturate(1.25) contrast(1.15) brightness(0.95);
+      background-image: url('20260612_163931.jpg'), radial-gradient(circle at 50% 40%, rgba(56, 189, 248, 0.35) 0%, rgba(168, 85, 247, 0.2) 60%, #090a10 100%);
+      background-size: cover;
+      background-position: center top;
+      filter: saturate(1.2) contrast(1.1);
       border-radius: 28px;
       transition: transform 0.2s ease;
     }
 
-    /* Holographic Anime Cel-Shading Overlays */
     .anime-cel-filter {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.15) 0%, rgba(9, 10, 16, 0.8) 90%);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.18) 0%, rgba(9, 10, 16, 0.75) 85%);
       mix-blend-mode: overlay;
       pointer-events: none;
     }
@@ -248,21 +248,21 @@
       font-family: 'Fira Code', monospace;
     }
 
-    /* Hero Text */
+    /* Hero Typography */
     .hero-name-badge {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--accent);
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
       display: inline-block;
     }
 
     .hero-title-solid {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+      font-size: clamp(2.3rem, 4.4vw, 4rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1px;
@@ -272,7 +272,7 @@
 
     .hero-title-hollow {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+      font-size: clamp(2.3rem, 4.4vw, 4rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -1px;
@@ -332,7 +332,7 @@
       margin-bottom: 2.5rem;
     }
 
-    /* Physics Canvas */
+    /* Interactive Physics Tech Stack Canvas */
     .physics-canvas-box {
       width: 100%;
       height: 500px;
@@ -365,7 +365,7 @@
       letter-spacing: 1px;
     }
 
-    /* Experience Tabs */
+    /* Career Experience */
     .experience-container {
       display: grid;
       grid-template-columns: 320px 1fr;
@@ -500,7 +500,7 @@
       </ul>
     </nav>
 
-    <!-- HERO SECTION WITH INTERACTIVE 3D ANIME AVATAR -->
+    <!-- HERO SECTION -->
     <section class="hero-section" id="about">
       <div class="avatar-3d-scene">
         <div class="avatar-card" id="avatarCard">
@@ -528,7 +528,7 @@
       </div>
     </section>
 
-    <!-- Interactive Physics Tech Stack with Brand Logos -->
+    <!-- INTERACTIVE PHYSICS TECH STACK -->
     <section id="techstack">
       <span class="section-tag">// TOOLCHAIN</span>
       <h2 class="section-heading">Interactive Tech Stack</h2>
@@ -540,7 +540,7 @@
       </div>
     </section>
 
-    <!-- Career Experience -->
+    <!-- CAREER EXPERIENCE -->
     <section id="experience">
       <span class="section-tag">// TRACK RECORD</span>
       <h2 class="section-heading">Career Experience</h2>
@@ -585,7 +585,7 @@
   </div>
 
   <script>
-    // 1. 3D Holographic Tilt Effect on Photo Card
+    // 1. 3D Holographic Parallax Tilt Effect
     const card = document.getElementById('avatarCard');
     const imgLayer = document.getElementById('avatarImg');
 
@@ -680,7 +680,6 @@
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         
-        // Gradient fill
         const grad = ctx.createRadialGradient(
           this.x - 8, this.y - 8, 4,
           this.x, this.y, this.radius
@@ -694,13 +693,11 @@
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        // Render Brand Logo
         const iconSize = 28;
         if (this.img.complete && this.img.naturalWidth !== 0) {
           ctx.drawImage(this.img, this.x - iconSize / 2, this.y - iconSize / 2 - 4, iconSize, iconSize);
         }
 
-        // Render Name Label
         ctx.fillStyle = '#f8fafc';
         ctx.font = '600 10px "Space Grotesk", sans-serif';
         ctx.textAlign = 'center';
@@ -790,36 +787,36 @@
         role: "Customer Care Analyst",
         company: "Sana Labs / Workday — Present",
         points: [
-          "Owning high-severity technical support across AI learning workflows and Workday integration pipelines.",
-          "Partnering directly with platform engineers to triage edge-case API synchronization failures and escalate reproducible bug telemetry.",
-          "Standardizing technical runbooks and training materials for distributed tier-1 customer success teams."
+          "Leading tier-2/tier-3 escalation response across AI learning ecosystems and Workday integration endpoints.",
+          "Collaborating with core engineering pods to triage API payloads and deliver telemetry logs for rapid resolution.",
+          "Authoring detailed runbooks and standard operating procedures for distributed support reps."
         ]
       },
       {
         role: "Product Support Engineer",
         company: "BetterPlace — Aug 2024 to Present",
         points: [
-          "Supported enterprise HR tech platform covering Attendance, Payroll, and Upskilling modules.",
-          "Triaged 200+ support requests daily across Jira & Zendesk while maintaining clean ticket hygiene.",
-          "Analyzed recurring patterns and drove root-cause remediations with development teams."
+          "Supported enterprise HR tech platform covering Attendance, Payroll, and Upskilling modules[cite: 1].",
+          "Triaged 200+ support requests daily across Jira & Zendesk while maintaining clean ticket hygiene[cite: 1].",
+          "Analyzed recurring patterns and drove root-cause remediations with development teams[cite: 1]."
         ]
       },
       {
         role: "Product Support Engineer",
         company: "Nextuple — Oct 2022 to Jul 2024",
         points: [
-          "Led 10+ monthly production release calls end-to-end with full playbook and rollback accountability.",
-          "Built and maintained SLI/SLO dashboards in Grafana for stakeholder visibility into platform availability.",
-          "Managed P1/P2 incidents from initial triage to cross-team post-mortems."
+          "Led 10+ monthly production release calls end-to-end with full playbook and rollback accountability[cite: 1].",
+          "Built and maintained SLI/SLO dashboards in Grafana for stakeholder visibility into platform availability[cite: 1].",
+          "Managed P1/P2 incidents from initial triage to cross-team post-mortems[cite: 1]."
         ]
       },
       {
         role: "Customer Support Engineer",
         company: "TechGyan — Jan 2022 to Sep 2022",
         points: [
-          "Provided empathetic, high-velocity technical support for enterprise Microsoft 365 tenants.",
-          "Recorded detailed case logs in Microsoft Dynamics 365 CRM, expanding reusable knowledge assets.",
-          "Conducted internal knowledge transfers to accelerate average resolution time."
+          "Provided empathetic, high-velocity technical support for enterprise Microsoft 365 tenants[cite: 2].",
+          "Recorded detailed case logs in Microsoft Dynamics 365 CRM, expanding reusable knowledge assets[cite: 2].",
+          "Conducted internal knowledge transfers to accelerate average resolution time[cite: 2]."
         ]
       }
     ];
@@ -845,3 +842,4 @@
   </script>
 </body>
 </html>
+     
