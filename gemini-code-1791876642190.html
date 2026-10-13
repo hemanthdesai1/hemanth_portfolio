@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hemanth Desai | Support Operations & AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(22, 30, 49, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --purple: #a855f7;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Ambient background lights */
+    .ambient-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .glow-1 { top: -100px; left: -100px; background: var(--accent); }
+    .glow-2 { bottom: -100px; right: -100px; background: var(--purple); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .brand-logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--success);
+      font-family: 'Fira Code', monospace;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    /* Hero & Avatar Section */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.lead {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 860px) {
+      .cta-row { justify-content: center; }
+    }
+
+    .btn {
+      padding: 0.75rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #04101e;
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(56, 189, 248, 0.4);
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Interactive Avatar Component */
+    .avatar-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .speech-bubble {
+      background: #1e293b;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.25rem;
+      position: relative;
+      min-height: 60px;
+      max-width: 320px;
+      transition: all 0.3s ease;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 8px 0;
+      border-style: solid;
+      border-color: #1e293b transparent;
+    }
+
+    .avatar-graphic {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
+      border: 2px solid rgba(56, 189, 248, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 35px var(--accent-glow);
+      position: relative;
+    }
+    .avatar-graphic:hover {
+      transform: scale(1.06) rotate(2deg);
+    }
+    .avatar-face {
+      font-size: 4.5rem;
+      user-select: none;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Metrics Grid */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Fira Code', monospace;
+    }
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Experience Accordion / Cards */
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    .timeline-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s ease;
+    }
+    .timeline-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .role-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .company-badge {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .period {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+    .duties {
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+    }
+    .duties li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* Interactive Terminal */
+    .terminal-box {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      margin-bottom: 4rem;
+    }
+    .terminal-header-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .td-red { background: #ef4444; }
+    .td-yellow { background: #f59e0b; }
+    .td-green { background: #10b981; }
+
+    .terminal-output {
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .terminal-cmd {
+      color: var(--accent);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.9); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="container">
+    <header>
+      <div class="brand-logo">hemanth.desai // ops</div>
+      <div class="status-badge">
+        <span class="pulse-dot"></span> 99.9% SLI/SLO Active
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero & Avatar -->
+      <section class="hero-grid">
+        <div>
+          <h1>Hi, I'm <span class="highlight">Hemanth Desai</span>.</h1>
+          <p class="lead">
+            Product & SaaS Support Engineer with 4+ years keeping mission-critical systems healthy, release playbooks coordinated, and customers delighted.
+          </p>
+          <div class="cta-row">
+            <button class="btn btn-primary" onclick="triggerAvatarSpeech()">Interact with Avatar 🤖</button>
+            <a class="btn btn-secondary" href="mailto:hemanthdesai1@gmail.com">Get in Touch</a>
+          </div>
+        </div>
+
+        <div class="avatar-wrapper">
+          <div class="speech-bubble" id="speechBubble">
+            Click my avatar or the button to hear my introduction!
+          </div>
+          <div class="avatar-graphic" id="avatarBtn" onclick="triggerAvatarSpeech()">
+            <div class="avatar-face" id="avatarEmoji">👨‍💻</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Metrics -->
+      <section class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Production Uptime Target</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">200+</div>
+          <div class="stat-label">Daily Incident Triages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Monthly Release Cycles Owned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4+ Yrs</div>
+          <div class="stat-label">SaaS & Enterprise Operations</div>
+        </div>
+      </section>
+
+      <!-- Interactive Ops Terminal -->
+      <div class="section-title">⚡ Interactive Ops Console</div>
+      <div class="terminal-box">
+        <div class="terminal-header-bar">
+          <div class="terminal-dot td-red"></div>
+          <div class="terminal-dot td-yellow"></div>
+          <div class="terminal-dot td-green"></div>
+        </div>
+        <div class="terminal-output" id="terminalOutput">
+<span class="terminal-cmd">$ hemanth-cli status --active</span>
+[SYSTEM] Agent initialized: Hemanth Desai
+[ACTIVE_ROLE] Customer Care Analyst @ Sana Labs / Workday
+[CORE_STACK] Zendesk, Jira, Grafana, SQL, Python, Generative AI / LLMs
+[STATUS] Ready to triage P1/P2 incidents and orchestrate production rollouts.
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="section-title">💼 Career Experience</div>
+      <div class="timeline">
+        
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <span class="role-title">Customer Care Analyst</span> — 
+              <span class="company-badge">Sana Labs / Workday</span>
+            </div>
+            <span class="period">Current</span>
+          </div>
+          <ul class="duties">
+            <li>Delivering high-touch support across enterprise AI learning workflows and Workday integrations.</li>
+            <li>Identifying defect trends, driving resolution with product engineering, and standardizing user runbooks.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <span class="role-title">Product Support Engineer</span> — 
+              <span class="company-badge">BetterPlace</span>
+            </div>
+            <span class="period">Aug 2024 – Present</span>
+          </div>
+          <ul class="duties">
+            <li>Supported HR tech platform covering Attendance, Payroll, and Upskilling modules.</li>
+            <li>Triaged 200+ daily tickets across Jira & Zendesk with structured RCA tracking and bug fixes.</li>
+            <li>Served as chief liaison between client stakeholders and backend engineering squads.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <span class="role-title">Product Support Engineer</span> — 
+              <span class="company-badge">Nextuple</span>
+            </div>
+            <span class="period">Oct 2022 – Jul 2024</span>
+          </div>
+          <ul class="duties">
+            <li>Led 10+ monthly release calls end-to-end with deployment playbooks and rollback plans.</li>
+            <li>Built real-time Grafana SLI/SLO dashboards for stakeholder visibility into system health.</li>
+            <li>Steered cross-functional P1/P2 incident war rooms through permanent root-cause remediation.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <div>
+              <span class="role-title">Customer Support Engineer</span> — 
+              <span class="company-badge">TechGyan</span>
+            </div>
+            <span class="period">Jan 2022 – Sep 2022</span>
+          </div>
+          <ul class="duties">
+            <li>Provided Tier-2 support for Microsoft 365 enterprise tenants and maintained Microsoft Dynamics 365 case logs.</li>
+            <li>Conducted knowledge-sharing webinars to upskill internal support teams on resolution workflows.</li>
+          </ul>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const avatarQuotes = [
+      "Hi! I'm Hemanth Desai. I turn complex SaaS chaos and P1 incidents into calm 99.9% uptime.",
+      "Currently resolving edge cases as Customer Care Analyst at Sana Labs / Workday!",
+      "I love automating ops workflows using Generative AI and LLMs. Let's build something efficient!",
+      "Release night? Don't worry—I've led 10+ releases monthly without skipping a beat on rollbacks."
+    ];
+    let quoteIndex = 0;
+
+    function triggerAvatarSpeech() {
+      const bubble = document.getElementById('speechBubble');
+      const emoji = document.getElementById('avatarEmoji');
+      
+      emoji.innerText = "🗣️";
+      setTimeout(() => emoji.innerText = "👨‍💻", 1200);
+
+      bubble.style.opacity = 0;
+      setTimeout(() => {
+        bubble.innerText = avatarQuotes[quoteIndex];
+        bubble.style.opacity = 1;
+        quoteIndex = (quoteIndex + 1) % avatarQuotes.length;
+      }, 150);
+    }
+  </script>
+</body>
+</html>
